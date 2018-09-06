@@ -5,34 +5,56 @@ import { playAlbum } from '../../../store';
 import { navigate } from '@reach/router';
 
 interface Props {
-  album: Album
+  album: Album;
 }
 
 class AlbumInfo extends React.PureComponent<Props, {}> {
   public render() {
     const { album } = this.props;
-    const { artists: [{ name: artistName }], images: [{ url: albumUrl }], name, release_date, tracks } = album;
-    const tracksLength = tracks.items && tracks.items.length ? ` • ${tracks.items.length} Songs` : '';
+    const {
+      artists: [{ name: artistName }],
+      images: [{ url: albumUrl }],
+      name,
+      release_date,
+      tracks,
+    } = album;
+    const tracksLength =
+      tracks.items && tracks.items.length
+        ? ` • ${tracks.items.length} Songs`
+        : '';
 
-    return (
-      <>
-        <img className="album-cover" src={albumUrl} />
-        <span className="album-name">{name}</span>
-        <span className="album-artist" onClick={this.goToArtist}>{artistName}</span>
-        <span className="album-year">{getYear(release_date)}{tracksLength}</span>
-        <button onClick={this.playAlbum}>Play Album</button>
-      </>
-    )
+    return [
+      <img className="album-cover" key="album-cover" src={albumUrl} />,
+      <span className="album-name" key="album-name">
+        {name}
+      </span>,
+      <span
+        className="album-artist"
+        key="album-artist"
+        onClick={this.goToArtist}
+      >
+        {artistName}
+      </span>,
+      <span className="album-year" key="album-year">
+        {getYear(release_date)}
+        {tracksLength}
+      </span>,
+      <button onClick={this.playAlbum} key="play-button">
+        Play Album
+      </button>,
+    ];
   }
   private playAlbum = () => {
     const { album } = this.props;
     playAlbum(album);
-  }
+  };
   private goToArtist = () => {
     const { album } = this.props;
-    const { artists: [{ id }] } = album;
+    const {
+      artists: [{ id }],
+    } = album;
     navigate(`/artist/${id}`);
-  }
+  };
 }
 
 export default AlbumInfo;

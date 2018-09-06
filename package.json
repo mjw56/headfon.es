@@ -6,8 +6,8 @@
     "install-client": "cd client && yarn && cd ../ && yarn copy-types-from-server",
     "install-server": "cd server && yarn && cd ../",
     "install-child-deps": "yarn install-client && yarn install-server",
-    "start-dev": "NODE_ENV=development concurrently \"cd client && yarn watch-css\" \"cd client && yarn start\" \"cd server && yarn build && yarn start-dev\"",
-    "start-prod": "NODE_ENV=production yarn build-client && yarn start-server-prod",
+    "start-dev": "NODE_ENV=development yarn copy-types-from-server && concurrently \"cd client && yarn watch-css\" \"cd client && yarn start\" \"cd server && yarn build && yarn start-dev\"",
+    "start-prod": "NODE_ENV=production yarn copy-types-from-server && yarn build-client && yarn start-server-prod",
     "start-server": "cd server && yarn start",
     "start-server-prod": "cd server && yarn build && yarn start-prod",
     "now-build": "yarn && yarn install-child-deps && yarn build-client && yarn build-server",
@@ -16,5 +16,8 @@
   },
   "devDependencies": {
     "concurrently": "^3.6.0"
+  },
+  "dependencies": {
+    "react-copy-write": "0.7.0"
   }
 }

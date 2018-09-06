@@ -10,7 +10,7 @@ import './style.css';
 
 const client = new Client({
   fetchOptions: { credentials: 'same-origin' },
-  url: `${window.location.origin}/graphql`
+  url: `${window.location.origin}/graphql`,
 });
 
 export class AppContainer extends React.PureComponent {
@@ -35,4 +35,4 @@ export class AppContainer extends React.PureComponent {
       </URQLProvider>
     );
   }
-};
+}

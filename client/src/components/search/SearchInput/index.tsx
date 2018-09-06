@@ -4,8 +4,12 @@ import { updateSearchResults } from '../../../store';
 import { navigate } from '@reach/router';
 import './style.css';
 
-interface ISearchProps { client: Client }
-interface ISearchState { query: string }
+interface ISearchProps {
+  client: Client;
+}
+interface ISearchState {
+  query: string;
+}
 
 export class Search extends React.Component<ISearchProps, ISearchState> {
   public input;
@@ -18,13 +22,13 @@ export class Search extends React.Component<ISearchProps, ISearchState> {
     return (
       <div className="search">
         <div className="search-input-info">Search for an album or songs</div>
-        <input 
-          type="text" 
-          name="searchQuery" 
-          onChange={this.handleChange} 
-          onKeyPress={this.handleKeyPress} 
+        <input
+          type="text"
+          name="searchQuery"
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
           placeholder="Start typing..."
-          ref={r => this.input = r}
+          ref={r => (this.input = r)}
         />
       </div>
     );
@@ -33,25 +37,26 @@ export class Search extends React.Component<ISearchProps, ISearchState> {
     const { client } = this.props;
     const { query: inputQuery } = this.state;
 
-    client.executeQuery(query(LookupSearch, { query: inputQuery }), true)
+    client
+      .executeQuery(query(LookupSearch, { query: inputQuery }), true)
       .then((res: any) => {
         updateSearchResults(res.data.search);
         navigate('/search');
       });
-  }
+  };
   private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
     const { value } = target;
 
     this.setState({
-      query: value
+      query: value,
     });
-  }
+  };
   private handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       this.handleSearch();
     }
-  }
+  };
 }
 
 const LookupSearch = `
